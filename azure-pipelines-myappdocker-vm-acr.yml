@@ -4,11 +4,11 @@ trigger:
       - main
 
 variables:
-  VM_IP_PUBLICA: '74.249.90.156'  # Se debe colocar la IP pública de tu máquina virtual
-  IMAGE_NAME: 'devopsgrupo9'  # Se debe colocar el Nombre de la imagen que será descargada desde ACR
-  ACR_NAME: 'grupo9devops'  # Se debe colocar el Nombre de tu Azure Container Registry (ACR)
-  ACR_USERNAME: 'grupo9devops'  # Se debe colocar el Nombre de usuario del ACR
-  ACR_PASSWORD: 'zDT20x94SDw0hHYyB471wq+SNCEIqscupz8BuGHbHQ+ACRDlYnud'  # Se debe colocar la Contraseña del ACR
+  VM_IP_PUBLICA: '20.109.7.173'  # Se debe colocar la IP pública de tu máquina virtual
+  IMAGE_NAME: 'myapp-nginx-s4'  # Se debe colocar el Nombre de la imagen que será descargada desde ACR
+  ACR_NAME: 'myappdevops9'  # Se debe colocar el Nombre de tu Azure Container Registry (ACR)
+  ACR_USERNAME: 'myappdevops9'  # Se debe colocar el Nombre de usuario del ACR
+  ACR_PASSWORD: '9JR5G0w6rsmUs8nBdng+rXb9+SQ2cpKpCVNJXk9TFM+ACRBSweU/'  # Se debe colocar la Contraseña del ACR
 
 stages:
   - stage: Deploy
@@ -16,7 +16,7 @@ stages:
       - deployment: DeployToVM
         displayName: 'Deploy to VM'
         environment:
-          name: 'VM-DEVOPS-S4'  # Nombre del entorno configurado en Azure DevOps
+          name: 'miVM-Azure'  # Nombre del entorno configurado en Azure DevOps
           resourceType: VirtualMachine  # Especifica que se conecta a una máquina virtual
         strategy:
           runOnce:
@@ -65,7 +65,7 @@ stages:
                     # Autenticarse en Azure Container Registry utilizando nombre de usuario y contraseña
                     echo "Autenticándose en Azure Container Registry y ejecutando la imagen Docker..."
                     echo ${ACR_PASSWORD} | sudo docker login ${ACR_NAME}.azurecr.io -u ${ACR_USERNAME} --password-stdin > /dev/null 2>&1
-                                                              
+
                     # Descargar la imagen desde ACR
                     sudo docker pull ${ACR_NAME}.azurecr.io/${ACR_NAME}.azurecr.io/${IMAGE_NAME}:latest
 
